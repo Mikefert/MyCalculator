@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     double result;
     double first_number;
     double second_number;
-    boolean decimal = false,flag=false,sum=false,sub=false,div=false,mult=false,dec=false;
+    boolean decimal = false,flag=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,37 +102,33 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.button15:
                     textView.setText(string+".");
-                    decimal=true;
                     break;
                 case R.id.button11:
-                    if(div!=true)
                     textView.setText(string+"/");
-                    div=true;
                     break;
                 case R.id.button12:
-                    if(mult!=true)
                     textView.setText(string+"*");
-                    mult=true;
                     break;
                 case R.id.button13:
-                    if (sub!=true)
                     textView.setText(string+"-");
-                    sub=true;
                     break;
                 case R.id.button14:
-                    if(sum!=true)
                     textView.setText(string+"+");
-                    sum=true;
                     break;
                 case R.id.button16:
-                    if(dec!=true)
                     textView.setText(string+".");
-                    dec=true;
                     break;
             }
         }
     };
 
+
+    public boolean operator() {
+        String string = textView.getText().toString();
+        if (string.endsWith("+") || string.endsWith("-") || string.endsWith("*") || string.endsWith("/") || string.endsWith("."))
+        return true;
+        return false;
+    }
 
 
 
