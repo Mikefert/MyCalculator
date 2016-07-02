@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
     double result;
     double first_number;
     double second_number;
-    boolean decimal = false,flag=false;
+    boolean decimal,flag=false;
+    int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,62 +62,117 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            int i=view.getId();
             String string=textView.getText().toString();
-            switch(i){
+            flag=operator();
+
+            switch(view.getId()){
                 case R.id.button0:
                     textView.setText(string+"0");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button1:
                     textView.setText(string+"1");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button2:
                     textView.setText(string+"2");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button3:
                     textView.setText(string+"3");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button4:
                     textView.setText(string+"4");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button5:
                     textView.setText(string+"5");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button6:
                     textView.setText(string+"6");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button7:
                     textView.setText(string+"7");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button8:
                     textView.setText(string+"8");
+                    if(count==0)
+                    decimal=true;
                     break;
                 case R.id.button9:
                     textView.setText(string+"9");
+                    if(count==0)
+                    decimal=true;
                     break;
 
 
                 case R.id.button10:
                     textView.setText("");
                     decimal=false;
+                    count=0;
                     break;
                 case R.id.button15:
-                    textView.setText(string+".");
+                    if(flag)
+                        string = removeLastSymbol(string);
+                    if(decimal){
+                        textView.setText(string+".");
+                        decimal=false;
+                        count++;
+                    }
                     break;
                 case R.id.button11:
-                    textView.setText(string+"/");
+                    if(flag)
+                       string= removeLastSymbol(string);
+                    if(string.length()!=0) {
+                        textView.setText(string + "/");
+                        decimal = false;
+                    }
+                    count=0;
                     break;
                 case R.id.button12:
-                    textView.setText(string+"*");
+                    if(flag)
+                       string = removeLastSymbol(string);
+                    if(string.length()!=0) {
+                        textView.setText(string + "*");
+                        decimal = false;
+                    }
+                    count=0;
                     break;
                 case R.id.button13:
-                    textView.setText(string+"-");
+                    if(flag)
+                       string = removeLastSymbol(string);
+                    if(string.length()!=0) {
+                        textView.setText(string + "-");
+                        decimal = false;
+                    }
+                    count=0;
                     break;
                 case R.id.button14:
-                    textView.setText(string+"+");
+                    if(flag)
+                       string = removeLastSymbol(string);
+                    if(string.length()!=0) {
+                        textView.setText(string + "+");
+                        decimal = false;
+                    }
+                    count=0;
                     break;
                 case R.id.button16:
-                    textView.setText(string+".");
+                    if(flag)
+                       string = removeLastSymbol(string);
+                    textView.setText(string+"\n LOL)))");
+                    decimal=false;
                     break;
             }
         }
@@ -128,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
         if (string.endsWith("+") || string.endsWith("-") || string.endsWith("*") || string.endsWith("/") || string.endsWith("."))
         return true;
         return false;
+    }
+    public String removeLastSymbol(String string){
+        string=string.substring(0,string.length()-1);
+        return string;
     }
 
 
