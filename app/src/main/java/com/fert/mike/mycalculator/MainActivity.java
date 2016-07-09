@@ -6,19 +6,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+import com.evgenii.jsevaluator.JsEvaluator;
+import com.evgenii.jsevaluator.interfaces.JsCallback;
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
-    TextView textView;
+    TextView textView,textView2;
     Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16;
-    double result;
-    double first_number;
-    double second_number;
-    boolean decimal,flag=false;
+    Checker checker;
+    String string;
+    JsEvaluator jsEvaluator;
+    double first_number,second_number,third_number,fourth_number;
+    boolean decimal,flag=false,operation=false;
     int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+         jsEvaluator = new JsEvaluator(this);
+
+
+        checker=new Checker();
         textView = (TextView) findViewById(R.id.textView);
+        textView2 = (TextView) findViewById(R.id.textView2);
         btn0=(Button) findViewById(R.id.button0);
         btn1=(Button) findViewById(R.id.button1);
         btn2=(Button) findViewById(R.id.button2);
@@ -59,12 +73,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
-
         @Override
         public void onClick(View view) {
-            String string=textView.getText().toString();
-            flag=operator();
 
+
+
+            string=textView.getText().toString();
+            flag=operator();
             switch(view.getId()){
                 case R.id.button0:
                     textView.setText(string+"0");
@@ -118,9 +133,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
 
+
                 case R.id.button10:
                     textView.setText("");
-                    decimal=false;
+                    textView2.setText("");
+                    decimal=false;operation=false;flag=false;
                     count=0;
                     break;
                 case R.id.button15:
@@ -171,8 +188,18 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.button16:
                     if(flag)
                        string = removeLastSymbol(string);
-                    textView.setText(string+"\n LOL)))");
                     decimal=false;
+
+
+                    jsEvaluator.evaluate(string, new JsCallback() {
+                        @Override
+                        public void onResult(final String result) {
+                            // Process result here.
+                            // This method is called in the UI thread.
+                            System.out.println(result);
+                            textView2.setText(result);
+                        }
+                    });
                     break;
             }
         }
@@ -189,24 +216,36 @@ public class MainActivity extends AppCompatActivity {
         string=string.substring(0,string.length()-1);
         return string;
     }
-
-
-
-
-    public double sum(double first,double second){
-        result = first+second;
-        return  result;
+    public String getString(){
+        return string;
     }
-    public double substitution(double first,double second){
-        result = first-second;
-        return  result;
+}
+class Checker{
+    int count_own=0,count=0;
+    MainActivity main=new MainActivity();
+   public Checker(){
+
     }
-    public double multiplication(double first,double second){
-        result = first*second;
-        return  result;
-    }
-    public double division(double first,double second){
-        result = first/second;
-        return  result;
+    Pattern pat;Matcher mat;
+    public void check(String s){
+
+        pat= Pattern.compile("[\\+\\-\\*\\/]");
+        mat=pat.matcher(s);
+        System.out.println("==========");
+        while(mat.find(count_own)){
+            if(count==0)
+            main.first_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
+            if(count==1)
+            main.second_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
+            if(count==2)
+            main.third_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
+            if(count==3)
+            main.fourth_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
+            System.out.println(mat.group());
+            count_own=s.indexOf(mat.group())+1;
+            count++;
+        }
+        System.out.println("--------------------------");
+        System.out.println(main.first_number+"---"+main.second_number+"---"+main.third_number+"---"+main.fourth_number);
     }
 }

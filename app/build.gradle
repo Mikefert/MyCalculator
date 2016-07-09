@@ -20,7 +20,17 @@ android {
 }
 
 dependencies {
+    compile(name:'jsevaluator-1.0', ext:'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile(name:'AndroidJSCore-2.2-pre2-release', ext:'aar')
 }

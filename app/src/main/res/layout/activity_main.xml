@@ -12,31 +12,52 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="150dip"
+        android:layout_height="75dip"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:background="#ffffff"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dip"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:background="#ffffff"/>
+        android:background="#ffffff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentEnd="true"></RelativeLayout>
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num1"
         android:id="@+id/button1"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentTop="false" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num2"
         android:id="@+id/button2"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textView2"
         android:layout_toEndOf="@+id/button1" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num3"
@@ -45,6 +66,7 @@
         android:layout_toEndOf="@+id/button2" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num4"
@@ -53,6 +75,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num5"
@@ -61,6 +84,7 @@
         android:layout_toEndOf="@+id/button1" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num6"
@@ -69,6 +93,7 @@
         android:layout_alignStart="@+id/button3" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num7"
@@ -77,6 +102,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num8"
@@ -85,6 +111,7 @@
         android:layout_alignStart="@+id/button5" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num9"
@@ -93,15 +120,17 @@
         android:layout_toEndOf="@+id/button5" />
 
     <Button
-        android:layout_width="@dimen/size"
+        style="@style/Buttons"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/size2"
         android:text="@string/clear"
         android:id="@+id/button10"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textView2"
         android:layout_toEndOf="@+id/button3" />
 
     <Button
-        android:layout_width="@dimen/size"
+        style="@style/Buttons"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/size2"
         android:text="@string/div"
         android:id="@+id/button11"
@@ -109,7 +138,8 @@
         android:layout_toEndOf="@+id/button3" />
 
     <Button
-        android:layout_width="@dimen/size"
+        style="@style/Buttons"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/size2"
         android:text="@string/mult"
         android:id="@+id/button12"
@@ -117,6 +147,7 @@
         android:layout_toEndOf="@+id/button6" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/dec"
@@ -125,6 +156,7 @@
         android:layout_alignStart="@+id/button7" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/num0"
@@ -133,6 +165,7 @@
         android:layout_toEndOf="@+id/button15" />
 
     <Button
+        style="@style/Buttons"
         android:layout_width="@dimen/size"
         android:layout_height="@dimen/size"
         android:text="@string/equals"
@@ -140,17 +173,11 @@
         android:layout_below="@+id/button8"
         android:layout_toEndOf="@+id/button0" />
 
-    Button
-        android:layout_width="@dimen/size"
-        android:text="New Button"
-        android:id="@+id/button16"
-        android:layout_alignBaseline="@+id/button17"
-        android:layout_alignBottom="@+id/button17"
-        android:layout_toEndOf="@+id/button6"
-        android:layout_height="@dimen/size2" />
+
 
     <Button
-        android:layout_width="@dimen/size"
+        style="@style/Buttons"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/size2"
         android:text="@string/sub"
         android:id="@+id/button13"
@@ -158,8 +185,9 @@
         android:layout_toEndOf="@+id/button9" />
 
     <Button
-        android:layout_width="@dimen/size"
-        android:layout_height="@dimen/size2"
+        style="@style/Buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/sum"
         android:id="@+id/button14"
         android:layout_below="@+id/button13"
