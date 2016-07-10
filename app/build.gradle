@@ -30,7 +30,3 @@ repositories {
         dirs 'libs'
     }
 }
-
-dependencies {
-    compile(name:'AndroidJSCore-2.2-pre2-release', ext:'aar')
-}

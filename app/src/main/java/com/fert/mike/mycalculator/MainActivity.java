@@ -1,6 +1,6 @@
 package com.fert.mike.mycalculator;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,21 +14,20 @@ import com.evgenii.jsevaluator.interfaces.JsCallback;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     TextView textView,textView2;
     Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16;
     Checker checker;
     String string;
     JsEvaluator jsEvaluator;
     double first_number,second_number,third_number,fourth_number;
-    boolean decimal,flag=false,operation=false;
+    boolean allow_dot, operator_end =false;
     int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         jsEvaluator = new JsEvaluator(this);
-
+        jsEvaluator = new JsEvaluator(this);
 
         checker=new Checker();
         textView = (TextView) findViewById(R.id.textView);
@@ -70,7 +69,30 @@ public class MainActivity extends AppCompatActivity {
         btn14.setOnClickListener(onClickListener);
         btn15.setOnClickListener(onClickListener);
         btn16.setOnClickListener(onClickListener);
+
+        btn10.setOnLongClickListener(onLongClickListener);
     }
+
+    View.OnLongClickListener onLongClickListener=new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            switch(view.getId()) {
+                case R.id.button10:
+                    string = textView.getText().toString();
+                    operator_end = operator();
+                    textView.setText("");
+                    textView2.setText("");
+
+                    allow_dot = false;
+                    operator_end = false;
+                    count = 0;
+                    System.out.println(view.getId());
+                    break;
+
+            }
+            return false;
+        }
+    };
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
         @Override
@@ -79,129 +101,141 @@ public class MainActivity extends AppCompatActivity {
 
 
             string=textView.getText().toString();
-            flag=operator();
+            operator_end =operator();
             switch(view.getId()){
                 case R.id.button0:
                     textView.setText(string+"0");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button1:
                     textView.setText(string+"1");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button2:
                     textView.setText(string+"2");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button3:
                     textView.setText(string+"3");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button4:
                     textView.setText(string+"4");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button5:
                     textView.setText(string+"5");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button6:
                     textView.setText(string+"6");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button7:
                     textView.setText(string+"7");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button8:
                     textView.setText(string+"8");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
                 case R.id.button9:
                     textView.setText(string+"9");
                     if(count==0)
-                    decimal=true;
+                    allow_dot =true;
                     break;
 
 
 
                 case R.id.button10:
-                    textView.setText("");
-                    textView2.setText("");
-                    decimal=false;operation=false;flag=false;
-                    count=0;
-                    break;
-                case R.id.button15:
-                    if(flag)
+                    if(string.length()!=0) {
+                        if(string.endsWith(".")){
+                            allow_dot =true;
+                            count=0;
+                        }
                         string = removeLastSymbol(string);
-                    if(decimal){
-                        textView.setText(string+".");
-                        decimal=false;
-                        count++;
+
+                        textView.setText(string);
+                        operator_end =operator();
+
+                        if(checkDecimal(string)){
+                            allow_dot=false;
+                        }
+                        else if(count == 0){
+                            allow_dot=true;
+                        }
+
+
                     }
                     break;
+
+
+
+
                 case R.id.button11:
-                    if(flag)
+                    if(operator_end)
                        string= removeLastSymbol(string);
                     if(string.length()!=0) {
                         textView.setText(string + "/");
-                        decimal = false;
+                        allow_dot = false;
                     }
                     count=0;
                     break;
                 case R.id.button12:
-                    if(flag)
+                    if(operator_end)
                        string = removeLastSymbol(string);
                     if(string.length()!=0) {
                         textView.setText(string + "*");
-                        decimal = false;
+                        allow_dot = false;
                     }
                     count=0;
                     break;
                 case R.id.button13:
-                    if(flag)
+                    if(operator_end)
                        string = removeLastSymbol(string);
                     if(string.length()!=0) {
                         textView.setText(string + "-");
-                        decimal = false;
+                        allow_dot = false;
                     }
                     count=0;
                     break;
                 case R.id.button14:
-                    if(flag)
+                    if(operator_end)
                        string = removeLastSymbol(string);
                     if(string.length()!=0) {
                         textView.setText(string + "+");
-                        decimal = false;
+                        allow_dot = false;
                     }
                     count=0;
                     break;
+                case R.id.button15:
+                    if(operator_end)
+                        string = removeLastSymbol(string);
+                    if(allow_dot){
+                        textView.setText(string+".");
+                        allow_dot =false;
+                        count++;
+                    }
+                    break;
                 case R.id.button16:
-                    if(flag)
+                    if(operator_end)
                        string = removeLastSymbol(string);
-                    decimal=false;
-
-
-                    jsEvaluator.evaluate(string, new JsCallback() {
-                        @Override
-                        public void onResult(final String result) {
-                            // Process result here.
-                            // This method is called in the UI thread.
-                            System.out.println(result);
-                            textView2.setText(result);
-                        }
-                    });
+                    allow_dot =false;
                     break;
             }
+            if(!textView.getText().toString().equals(""))
+            result(textView.getText().toString());
+            else
+            textView2.setText("");
         }
     };
 
@@ -215,6 +249,22 @@ public class MainActivity extends AppCompatActivity {
     public String removeLastSymbol(String string){
         string=string.substring(0,string.length()-1);
         return string;
+    }
+    public void result(String string){
+        jsEvaluator.evaluate(string, new JsCallback() {
+            @Override
+            public void onResult(final String result) {
+                textView2.setText(result);
+            }
+        });
+    }
+    public  boolean checkDecimal(String string){
+        if(string.length()!=0){
+            if(string.lastIndexOf(".")>string.lastIndexOf("+")&&string.lastIndexOf(".")>string.lastIndexOf("-")&&string.lastIndexOf(".")>string.lastIndexOf("*")&&string.lastIndexOf(".")>string.lastIndexOf("/")){
+                return true;
+            }
+        }
+        return false;
     }
     public String getString(){
         return string;

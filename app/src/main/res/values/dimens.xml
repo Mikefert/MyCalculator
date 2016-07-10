@@ -6,5 +6,6 @@
     <dimen name="activity_vertical_margin_my">0dp</dimen>
     <dimen name="size">92dip</dimen>
     <dimen name="size2">72dip</dimen>
+    <dimen name="size3">60dip</dimen>
     <dimen name="margin">0dip</dimen>
 </resources>
