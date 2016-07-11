@@ -10,17 +10,11 @@ import android.widget.TextView;
 import com.evgenii.jsevaluator.JsEvaluator;
 import com.evgenii.jsevaluator.interfaces.JsCallback;
 
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class MainActivity extends Activity {
     TextView textView,textView2;
     Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14,btn15,btn16;
-    Checker checker;
     String string;
     JsEvaluator jsEvaluator;
-    double first_number,second_number,third_number,fourth_number;
     boolean allow_dot, operator_end =false;
     int count=0;
     @Override
@@ -29,7 +23,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         jsEvaluator = new JsEvaluator(this);
 
-        checker=new Checker();
         textView = (TextView) findViewById(R.id.textView);
         textView2 = (TextView) findViewById(R.id.textView2);
         btn0=(Button) findViewById(R.id.button0);
@@ -268,34 +261,5 @@ public class MainActivity extends Activity {
     }
     public String getString(){
         return string;
-    }
-}
-class Checker{
-    int count_own=0,count=0;
-    MainActivity main=new MainActivity();
-   public Checker(){
-
-    }
-    Pattern pat;Matcher mat;
-    public void check(String s){
-
-        pat= Pattern.compile("[\\+\\-\\*\\/]");
-        mat=pat.matcher(s);
-        System.out.println("==========");
-        while(mat.find(count_own)){
-            if(count==0)
-            main.first_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
-            if(count==1)
-            main.second_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
-            if(count==2)
-            main.third_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
-            if(count==3)
-            main.fourth_number=Double.parseDouble(s.substring(0,s.indexOf(mat.group())));
-            System.out.println(mat.group());
-            count_own=s.indexOf(mat.group())+1;
-            count++;
-        }
-        System.out.println("--------------------------");
-        System.out.println(main.first_number+"---"+main.second_number+"---"+main.third_number+"---"+main.fourth_number);
     }
 }
