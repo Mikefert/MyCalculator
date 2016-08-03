@@ -12,6 +12,8 @@ import com.evgenii.jsevaluator.JsEvaluator;
 import com.evgenii.jsevaluator.interfaces.JsCallback;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends Activity {
     TextView textView, textView2;
@@ -20,6 +22,7 @@ public class MainActivity extends Activity {
     JsEvaluator jsEvaluator;
     boolean allow_dot, operator_end = false;
     int count = 0;
+    private static final String TAG="MyTag";
     //MatchParser p;
 
     @Override
@@ -169,6 +172,9 @@ public class MainActivity extends Activity {
                             allow_dot = true;
                         }
                     }
+                    examples();
+
+
                     break;
 
 
@@ -274,5 +280,43 @@ public class MainActivity extends Activity {
         return string;
     }
 
-}
+    public boolean checkString(String s){
+        String number = "\\d+\\.?\\d*";
+        String signed_number="-?"+number;
+        String operators="[\\+\\-\\/\\*]";
 
+        String without_brackets=signed_number+"("+operators+signed_number+")*";
+        String with_brackets="\\("+signed_number+"("+operators+signed_number+")*\\)";
+
+        String expression="("+without_brackets+"|"+with_brackets+")";
+        String with_brackets_v2="\\("+expression+"("+operators+expression+")*\\)";
+        String expression_v2="("+expression+"|"+with_brackets_v2+")+";
+
+
+        Pattern pattern =Pattern.compile(expression_v2+"("+operators+expression_v2+")*");
+        Matcher matcher=pattern.matcher(s);
+        if(matcher.matches())
+        return true;
+        return false;
+    }
+    void examples(){
+        Log.i(TAG, "---------------START---------------");
+        Log.i(TAG, String.valueOf(checkString("(((2.22+2)+(6-2))-7)")));
+        Log.i(TAG, String.valueOf(checkString("(2.22+(2-3))")));
+        Log.i(TAG, String.valueOf(checkString("2+2*2.3")));
+        Log.i(TAG, String.valueOf(checkString("-22+2*2+-23")));
+        Log.i(TAG, String.valueOf(checkString("(22+22)+(33-2)")));
+        Log.i(TAG, String.valueOf(checkString("(22+22)+((33-2)*(4-(6-8)))")));
+        Log.i(TAG, String.valueOf(checkString("(22+22)+((33-2)*(4-(6-8)+2))")));
+        Log.i(TAG, String.valueOf(checkString("((22+22)+((33-2)*(4-(6-8)+(2-5))))")));
+
+        Log.i(TAG, "----------------MIDDLE--------------");
+        Log.i(TAG, String.valueOf(checkString("---------------")));
+        Log.i(TAG, String.valueOf(checkString("2")));
+        Log.i(TAG, String.valueOf(checkString("(-2)")));
+        Log.i(TAG, String.valueOf(checkString("-2.2")));
+        Log.i(TAG, String.valueOf(checkString("2/(5+1)")));
+
+
+    }
+}
